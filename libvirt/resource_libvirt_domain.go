@@ -897,6 +897,8 @@ func resourceLibvirtDomainRead(d *schema.ResourceData, meta interface{}) error {
 			disk = map[string]interface{}{
 				"volume_id": virVol.Key,
 			}
+		} else if diskDef.Source.NVME != nil {
+			fmt.Println("skip reading nvme block")
 		} else {
 			pool, err := virConn.StoragePoolLookupByName(diskDef.Source.Volume.Pool)
 			if err != nil {
